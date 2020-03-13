@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('news_content') ? 'has-error' : '' }}">
                             <label for="news_content" class="form-control-label">Content</label>
-                            <textarea class="form-control" name="news_content">
+                            <textarea class="form-control" name="news_content" id="editor1">
                                 @if(!empty($news)) {{ $news->content}} @else {{ old('news_content') }} @endif
                             </textarea>
                               @if(!empty($errors->first('news_content')))
