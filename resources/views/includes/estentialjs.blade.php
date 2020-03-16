@@ -20,7 +20,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 <!-- Sweetalert -->
-<script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/sweetalert2/6.4.1/sweetalert2.js"></script> -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
 <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
 <script>
         CKEDITOR.replace( 'editor1' );
@@ -77,66 +78,50 @@
       {
         dataObj.id     =  id;
       }
-       $.ajax({
-              url: $('#hf_base_url').val() + '/ajax/delete-item',
-              type: 'GET',
-              cache: false,
-              datatype: 'json',
-              data: {data:dataObj},
-              headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
-              success: function(data)
-              {
-                if(data.delete == true)
-                {
-                  swal({
-                    title: 'Deleted',
-                    text: 'Your selected item deleted.',
-                    type: 'success',
-                    timer: 2000,
-                    showCancelButton: false,
-                    showConfirmButton: false
-                  });
-                }
-                window.location.href = window.location.href;
-              },
-              
-              error:function(){}
-        });
-      /*swal({
-        title: "Are You Sure",
-        text:  "You want to delete this item",
+      swal({
+        title: "Are you sure?",
+        text: "You will not be able to recover this imaginary file!",
         type: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes delete it",
-        closeOnConfirm: false
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel plx!",
+        closeOnConfirm: false,
+        closeOnCancel: false
       },
-      function(isConfirm)
-      {
-        if(isConfirm)
-        {
-          $.ajax({
-                url: $('#hf_base_url').val() + '/ajax/delete-item',
-                type: 'GET',
-                cache: false,
-                datatype: 'json',
-                data: {data:dataObj},
-                headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
-                success: function(data)
-                {
-                  if(data.delete == true)
+      function(isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                  url: $('#hf_base_url').val() + '/ajax/delete-item',
+                  type: 'GET',
+                  cache: false,
+                  datatype: 'json',
+                  data: {data:dataObj},
+                  headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
+                  success: function(data)
                   {
-
-                    swal("Deleted", "Your selected item deleted", "success");
-
-                      window.location.href = window.location.href;
-
-                  }
-                },
-                
-                error:function(){}
-          });
+                    if(data.delete == true)
+                    {
+                      swal({
+                        title: 'Deleted',
+                        text: 'Your selected item deleted.',
+                        type: 'success',
+                        timer: 2000,
+                        showCancelButton: false,
+                        showConfirmButton: false
+                      },
+                      function(){ 
+                           location.reload();
+                       }
+                      );
+                    }                    
+                  },
+                  
+                  error:function(){}
+            });            
+        } else {
+          swal("Cancelled", "Your imaginary file is safe :)", "error");
         }
-      });*/
+      });
     }
 </script>
